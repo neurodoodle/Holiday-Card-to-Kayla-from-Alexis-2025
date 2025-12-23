@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Holiday Card for Kayla</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #0a5c36, #b11226);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: "Georgia", serif;
+  }
+
+  /* Snow */
+  .snow {
+    position: fixed;
+    top: -10px;
+    color: white;
+    font-size: 1em;
+    user-select: none;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(110vh);
+    }
+  }
+
+  /* Card container */
+  .card-wrapper {
+    perspective: 1200px;
+  }
+
+  .card {
+    width: 360px;
+    height: 480px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1.2s;
+    cursor: pointer;
+  }
+
+  .card.open {
+    transform: rotateY(-180deg);
+  }
+
+  .card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    backface-visibility: hidden;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+    overflow: hidden;
+  }
+
+  /* Front */
+  .card-front {
+    background: url("https://images.unsplash.com/photo-1544025162-d76694265947") center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+  }
+
+  .card-front h1 {
+    background: rgba(0,0,0,0.5);
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  /* Inside */
+  .card-inside {
+    background: #fffaf3;
+    transform: rotateY(180deg);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .slideshow img {
+    width: 100%;
+    border-radius: 12px;
+    display: none;
+  }
+
+  .slideshow img.active {
+    display: block;
+  }
+
+  h2 {
+    color: #b11226;
+    margin: 10px 0;
+  }
+
+  p {
+    color: #333;
+    line-height: 1.5;
+  }
+
+  .signature {
+    margin-top: 20px;
+    font-style: italic;
+  }
+
+  /* Music button */
+  .music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #ffffffcc;
+    border: none;
+    border-radius: 50%;
+    padding: 14px;
+    cursor: pointer;
+    font-size: 18px;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- SNOW -->
+<script>
+  for (let i = 0; i < 40; i++) {
+    let snow = document.createElement("div");
+    snow.className = "snow";
+    snow.innerHTML = "❄";
+    snow.style.left = Math.random() * 100 + "vw";
+    snow.style.animationDuration = (5 + Math.random() * 10) + "s";
+    snow.style.opacity = Math.random();
+    snow.style.fontSize = (10 + Math.random() * 20) + "px";
+    document.body.appendChild(snow);
+  }
+</script>
+
+<div class="card-wrapper">
+  <div class="card" onclick="this.classList.toggle('open')">
+
+    <!-- FRONT -->
+    <div class="card-face card-front">
+      <h1>Tap to Open 🎁</h1>
+    </div>
+
+    <!-- INSIDE -->
+    <div class="card-face card-inside">
+
+      <!-- SLIDESHOW -->
+      <div class="slideshow">
+        <img class="active" src="https://images.unsplash.com/photo-1608889175250-c3b0c1667d8e">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750">
+        <img src="https://images.unsplash.com/photo-1545623703-583dd236ad1b">
+      </div>
+
+      <h2>Merry Christmas & Happy New Year, Kayla 🎄✨</h2>
+
+      <p>
+        Thank you for being such a helpful and funny sister.
+        I really appreciate all the ways you've helped me this year,
+        from math homework to figuring out how to assemble the screen protector. 
+        May the new year bring you happiness, peace,
+        and everything you’re hoping for.
+        Looking forward to seeing you grow as a person in 2026!
+      </p>
+
+      <div class="signature">
+        Love,<br>
+        Alexis ❤️
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/12/06/audio_07c3c42c36.mp3">
+</audio>
+
+<button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+<script>
+  const music = document.getElementById("music");
+  let playing = false;
+
+  function toggleMusic() {
+    if (!playing) {
+      music.play();
+      playing = true;
+    } else {
+      music.pause();
+      playing = false;
+    }
+  }
+
+  // Slideshow
+  let index = 0;
+  const slides = document.querySelectorAll(".slideshow img");
+
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 3000);
+</script>
+
+</body>
+</html>
