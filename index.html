@@ -9,7 +9,7 @@
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #0a5c36, #b11226); /* RESTORED */
+    background: linear-gradient(135deg, #0a5c36, #b11226);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,18 +17,25 @@
     font-family: "Georgia", serif;
   }
 
+  /* Snow */
   .snow {
     position: fixed;
     top: -10px;
     color: white;
     animation: fall linear infinite;
+    pointer-events: none; /* ✅ ALLOW CLICKS THROUGH */
+    z-index: 1;
   }
 
   @keyframes fall {
     to { transform: translateY(110vh); }
   }
 
-  .card-wrapper { perspective: 1400px; }
+  /* Card */
+  .card-wrapper {
+    perspective: 1400px;
+    z-index: 10; /* ✅ ABOVE SNOW */
+  }
 
   .card {
     width: 440px;
@@ -58,9 +65,7 @@
     align-items: center;
   }
 
-  .card-front img {
-    width: 90%;
-  }
+  .card-front img { width: 90%; }
 
   .card-inside {
     background: #fffaf3;
@@ -145,4 +150,24 @@
 <script>
   const card = document.getElementById("card");
   const music = document.getElementById("music");
-  let started =
+  let started = false;
+
+  card.addEventListener("click", () => {
+    card.classList.toggle("open");
+    if (!started) {
+      music.play().catch(() => {});
+      started = true;
+    }
+  });
+
+  let index = 0;
+  const slides = document.querySelectorAll(".slideshow img");
+  setInterval(() => {
+    slides[index].classList.remove("active");
+    index = (index + 1) % slides.length;
+    slides[index].classList.add("active");
+  }, 3000);
+</script>
+
+</body>
+</html>
