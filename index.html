@@ -9,7 +9,7 @@
   body {
     margin: 0;
     height: 100vh;
-    background: #ABF18F; /* NEW GREEN */
+    background: linear-gradient(135deg, #0a5c36, #b11226); /* RESTORED */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,39 +17,29 @@
     font-family: "Georgia", serif;
   }
 
-  /* Snow */
   .snow {
     position: fixed;
     top: -10px;
     color: white;
-    font-size: 1em;
-    user-select: none;
     animation: fall linear infinite;
   }
 
   @keyframes fall {
-    to {
-      transform: translateY(110vh);
-    }
+    to { transform: translateY(110vh); }
   }
 
-  /* Bigger card */
-  .card-wrapper {
-    perspective: 1400px;
-  }
+  .card-wrapper { perspective: 1400px; }
 
   .card {
-    width: 440px;   /* BIGGER */
-    height: 580px;  /* BIGGER */
+    width: 440px;
+    height: 580px;
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1.2s;
     cursor: pointer;
   }
 
-  .card.open {
-    transform: rotateY(-180deg);
-  }
+  .card.open { transform: rotateY(-180deg); }
 
   .card-face {
     position: absolute;
@@ -57,24 +47,21 @@
     height: 100%;
     border-radius: 18px;
     backface-visibility: hidden;
-    box-shadow: 0 14px 40px rgba(0,0,0,0.3);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
     overflow: hidden;
   }
 
-  /* Front */
   .card-front {
-    background: #FFB5AC; /* NEW RED */
+    background: #FFB5AC;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
   }
 
   .card-front img {
     width: 90%;
   }
 
-  /* Inside */
   .card-inside {
     background: #fffaf3;
     transform: rotateY(180deg);
@@ -88,23 +75,17 @@
     display: none;
   }
 
-  .slideshow img.active {
-    display: block;
-  }
+  .slideshow img.active { display: block; }
 
-  h2 {
-    color: #FF6F61;
-    margin: 14px 0;
-  }
+  h2 { color: #b11226; }
 
   p {
-    color: #333;
     line-height: 1.6;
     font-size: 1.05rem;
   }
 
   .signature {
-    margin-top: 22px;
+    margin-top: 20px;
     font-style: italic;
   }
 </style>
@@ -112,15 +93,13 @@
 
 <body>
 
-<!-- Snow -->
 <script>
   for (let i = 0; i < 35; i++) {
-    let snow = document.createElement("div");
+    const snow = document.createElement("div");
     snow.className = "snow";
     snow.innerHTML = "❄";
     snow.style.left = Math.random() * 100 + "vw";
     snow.style.animationDuration = (6 + Math.random() * 8) + "s";
-    snow.style.opacity = Math.random();
     snow.style.fontSize = (12 + Math.random() * 18) + "px";
     document.body.appendChild(snow);
   }
@@ -136,8 +115,6 @@
 
     <!-- INSIDE -->
     <div class="card-face card-inside">
-
-      <!-- SLIDESHOW -->
       <div class="slideshow">
         <img class="active" src="snoopy.jpg">
         <img src="snoopyskating.jpg">
@@ -149,20 +126,18 @@
         Thank you for being such a helpful and funny sister.
         I really appreciate all the ways you've helped me this year,
         from math homework to figuring out how to assemble the screen protector. 
-        May the new year bring you happiness, peace,
+        May the new year bring you happiness, good grades, health,
         and everything you’re hoping for.
         Looking forward to seeing you grow as a person in 2026!
       </p>
 
       <div class="signature">
-        With love,<br>
-        Alexis ❤️
+        With love,<br>Alexis ❤️
       </div>
     </div>
   </div>
 </div>
 
-<!-- MUSIC -->
 <audio id="music" loop>
   <source src="santa-baby.mp3" type="audio/mpeg">
 </audio>
@@ -170,27 +145,4 @@
 <script>
   const card = document.getElementById("card");
   const music = document.getElementById("music");
-  let started = false;
-
-  card.addEventListener("click", () => {
-    card.classList.toggle("open");
-
-    if (!started) {
-      music.play();
-      started = true;
-    }
-  });
-
-  // Slideshow
-  let index = 0;
-  const slides = document.querySelectorAll(".slideshow img");
-
-  setInterval(() => {
-    slides[index].classList.remove("active");
-    index = (index + 1) % slides.length;
-    slides[index].classList.add("active");
-  }, 3000);
-</script>
-
-</body>
-</html>
+  let started =
