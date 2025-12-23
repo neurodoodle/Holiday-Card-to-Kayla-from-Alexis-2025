@@ -23,7 +23,7 @@
     top: -10px;
     color: white;
     animation: fall linear infinite;
-    pointer-events: none; /* ✅ ALLOW CLICKS THROUGH */
+    pointer-events: none;
     z-index: 1;
   }
 
@@ -34,7 +34,8 @@
   /* Card */
   .card-wrapper {
     perspective: 1400px;
-    z-index: 10; /* ✅ ABOVE SNOW */
+    position: relative;
+    z-index: 5;
   }
 
   .card {
@@ -42,11 +43,12 @@
     height: 580px;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 1.2s;
-    cursor: pointer;
+    transition: transform 1.2s ease;
   }
 
-  .card.open { transform: rotateY(-180deg); }
+  .card.open {
+    transform: rotateY(-180deg);
+  }
 
   .card-face {
     position: absolute;
@@ -65,7 +67,9 @@
     align-items: center;
   }
 
-  .card-front img { width: 90%; }
+  .card-front img {
+    width: 90%;
+  }
 
   .card-inside {
     background: #fffaf3;
@@ -80,9 +84,13 @@
     display: none;
   }
 
-  .slideshow img.active { display: block; }
+  .slideshow img.active {
+    display: block;
+  }
 
-  h2 { color: #b11226; }
+  h2 {
+    color: #b11226;
+  }
 
   p {
     line-height: 1.6;
@@ -93,11 +101,33 @@
     margin-top: 20px;
     font-style: italic;
   }
+
+  /* CLICK OVERLAY */
+  .open-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.25);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 18px;
+    cursor: pointer;
+    z-index: 10;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  }
+
+  .open-overlay.hidden {
+    display: none;
+  }
 </style>
 </head>
 
 <body>
 
+<!-- Snow -->
 <script>
   for (let i = 0; i < 35; i++) {
     const snow = document.createElement("div");
@@ -111,6 +141,12 @@
 </script>
 
 <div class="card-wrapper">
+
+  <!-- CLICK OVERLAY -->
+  <div class="open-overlay" id="openBtn">
+    Click to open! 🎁
+  </div>
+
   <div class="card" id="card">
 
     <!-- FRONT -->
@@ -128,12 +164,9 @@
       <h2>Merry Christmas & Happy New Year, Kayla 🎄</h2>
 
       <p>
-        Thank you for being such a helpful and funny sister.
-        I really appreciate all the ways you've helped me this year,
-        from math homework to figuring out how to assemble the screen protector. 
-        May the new year bring you happiness, good grades, health,
-        and everything you’re hoping for.
-        Looking forward to seeing you grow as a person in 2026!
+        I hope your holidays are cozy, sweet, and full of moments
+        that make you smile. May the new year bring you warmth,
+        joy, and everything you deserve.
       </p>
 
       <div class="signature">
@@ -143,6 +176,7 @@
   </div>
 </div>
 
+<!-- MUSIC -->
 <audio id="music" loop>
   <source src="santa-baby.mp3" type="audio/mpeg">
 </audio>
@@ -150,16 +184,15 @@
 <script>
   const card = document.getElementById("card");
   const music = document.getElementById("music");
-  let started = false;
+  const openBtn = document.getElementById("openBtn");
 
-  card.addEventListener("click", () => {
-    card.classList.toggle("open");
-    if (!started) {
-      music.play().catch(() => {});
-      started = true;
-    }
+  openBtn.addEventListener("click", () => {
+    card.classList.add("open");
+    openBtn.classList.add("hidden");
+    music.play().catch(() => {});
   });
 
+  // Slideshow
   let index = 0;
   const slides = document.querySelectorAll(".slideshow img");
   setInterval(() => {
