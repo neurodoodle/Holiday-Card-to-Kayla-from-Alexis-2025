@@ -76,6 +76,11 @@
     transform: rotateY(180deg);
     padding: 22px;
     text-align: center;
+    overflow-y: auto;
+    max-height: 100%;
+    .card-inside {
+  -webkit-overflow-scrolling: touch;
+}
   }
 
   .slideshow img {
